@@ -9,7 +9,7 @@ Route::get('/', function () {
 Route::get('/test1', function () {
     Echo "estoy en test";
 });
-Route::get('/', function () {
+Route::get('/contacto', function () {
     return view('contacto');
 });
 Route::get('/bio', function () {
