@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\StoreRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\Post\PutRequest;
+
 use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
 
@@ -66,9 +68,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::pluck('id', 'title');
-        //dd($categories);
-        return view('dashboard.post.create', compact('categories'));
-        //
+        $post = new Post();
+        return view('dashboard.post.create', compact('categories', 'post'));
     }
 
     /**
@@ -111,7 +112,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+         return view("dashboard.post.show",compact('post'));
+         //
     }
 
     /**
@@ -127,9 +129,16 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(PutRequest $request, Post $post)
     {
-        //
+        $data = $request->validated();
+        if (isset($data["image"])) {
+            $data["image"] = time() . "." . $data["image"]->extension();
+            $request->image->move(public_path("image"), $data["image"]);
+        }
+        $post->update($data);
+
+        return to_route("post.index");
     }
 
     /**

@@ -1,0 +1,3 @@
+button, input, select, optgroup, textarea {
+    border: 1px red solid;
+}

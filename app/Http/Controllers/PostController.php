@@ -36,7 +36,8 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+       return view("dashboard.post.show",compact('post'));
+
     }
 
     /**
