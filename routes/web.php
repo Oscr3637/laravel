@@ -52,11 +52,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth',App\Http\Middlewa
     ]);
 });
     Route::get('/db', function () {
-/*
+
 $post = Post::join('categories', 'categories.id', '=', 'posts.category_id')->select('posts.*', 'categories.title as category')->orderBy('posts.created_at', 'desc')->toSql();
  echo $post;
-*/
-$ver = Post::limit(3)->toSql();
- echo $ver;
+
+//$ver = Post::limit(3)->toSql();
+ //echo $ver;
 
 });
