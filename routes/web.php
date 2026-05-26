@@ -40,3 +40,23 @@ Route::middleware([App\Http\Middleware\TestMiddleware::class])->group(function (
         echo $id;
     });
 });
+
+Route::group(['prefix' => 'dashboard', 'middleware' => ['auth',App\Http\Middleware\UserIsAdminMiddleware::class]], function () {
+    Route::get('/', function () {
+        return view('dashboard.dashboard');
+            })->name("dashboard");
+
+    Route::resources([
+        'post' => App\Http\Controllers\Dashboard\PostController::class,
+        //'category' => App\Http\Controllers\Dashboard\CategoryController::class,
+    ]);
+});
+    Route::get('/db', function () {
+/*
+$post = Post::join('categories', 'categories.id', '=', 'posts.category_id')->select('posts.*', 'categories.title as category')->orderBy('posts.created_at', 'desc')->toSql();
+ echo $post;
+*/
+$ver = Post::limit(3)->toSql();
+ echo $ver;
+
+});
