@@ -51,6 +51,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth',App\Http\Middlewa
         //'category' => App\Http\Controllers\Dashboard\CategoryController::class,
     ]);
 });
+/*
     Route::get('/db', function () {
 
 $post = Post::join('categories', 'categories.id', '=', 'posts.category_id')->select('posts.*', 'categories.title as category')->orderBy('posts.created_at', 'desc')->toSql();
@@ -60,3 +61,19 @@ $post = Post::join('categories', 'categories.id', '=', 'posts.category_id')->sel
  //echo $ver;
 
 });
+
+$posts7 = Post::where('id','>=', 1)->get();
+
+foreach($posts7 as $post7){
+  echo "Titulo: ". $post7->title . "<br>";
+  echo "Slug: ". $post7->slug . "<br>";
+  echo "Content: ". $post7->content . "<br>";
+  echo "*************";
+  }
+// dd($posts7);
+
+$post8 = Post::where('id','>=', 1)->pluck('title', 'id');
+
+dd($post8);
+});
+*/
