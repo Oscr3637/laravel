@@ -100,7 +100,7 @@ class PostController extends Controller
 
         Post::create($request->validated());
 
-        return to_route("post.index");
+        return to_route("post.index")->with('status', 'post creado correctamente');
 
 
         //dd($request->all());
@@ -136,9 +136,11 @@ class PostController extends Controller
             $data["image"] = time() . "." . $data["image"]->extension();
             $request->image->move(public_path("image"), $data["image"]);
         }
+        session(['key-xx' => 'ENV-555']);
         $post->update($data);
 
-        return to_route("post.index");
+        return to_route("post.index")->with('status', 'post actualizado correctamente');
+
     }
 
     /**
@@ -148,6 +150,9 @@ class PostController extends Controller
     {
         //dd($post);     
         $post->delete();
-        return to_route("post.index");
+        session()->forget('key-xx');
+        return to_route("post.index")->with('status', 'post eleminado correctamente');
+       
+
     }
 }

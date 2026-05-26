@@ -29,4 +29,14 @@ route::get('/detalle', function () {
     return view ('detalle');
     });
 
-Route::resource('post', PostController::class);
+//Route::resource('post', PostController::class);
+
+Route::group(['prefix' => 'dashboard'], function () {
+    Route::resource('post', PostController::class);
+    //Route::resource('category', CategoryController::class);
+});
+Route::middleware([App\Http\Middleware\TestMiddleware::class])->group(function () {
+    Route::get('/test/{id}', function (int $id) {
+        echo $id;
+    });
+});

@@ -13,6 +13,11 @@
     @if (session('status'))
     {{ session('status') }}
     @endif
+    <br>
+    @session('key-xx')
+    {{ $value }}
+    @endsession
+
     @yield('content')
 </body>
 
