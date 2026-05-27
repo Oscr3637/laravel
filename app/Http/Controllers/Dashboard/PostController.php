@@ -7,9 +7,9 @@ use App\Http\Requests\Post\StoreRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\Post\PutRequest;
-
-use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -152,7 +152,69 @@ class PostController extends Controller
         $post->delete();
         session()->forget('key-xx');
         return to_route("post.index")->with('status', 'post eleminado correctamente');
-       
+    }
+}
 
+class CategoryController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(): View
+    {
+        $categories = Category::paginate(2);
+        return view('dashboard.category.index', compact('categories'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(): View
+    {
+        $category = new Category();
+        return view('dashboard.category.create', compact('category'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreRequest $request)
+    {
+        Category::create($request->validated());
+        return to_route('category.index');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Category $category): View
+    {
+        return view('dashboard.category.show', compact('category'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Category $category): View
+    {
+        return view('dashboard.category.edit', compact('category'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(PutRequest $request, Category $category)
+    {
+        $category->update($request->validated());
+        return to_route('category.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Category $category)
+    {
+        $category->delete();
+        return to_route('category.index');
     }
 }

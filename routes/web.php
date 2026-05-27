@@ -2,6 +2,12 @@
 use App\Http\Controllers\Dashboard\PostController;
 //use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
+use App\Models\Category;
+use App\Models\Profile;
+use App\Http\Controllers\User\ProfileController;
+use App\Models\Post;
+use App\Models\Tag;
 
 Route::get('/', function () {
     return view('welcome');
@@ -41,6 +47,11 @@ Route::middleware([App\Http\Middleware\TestMiddleware::class])->group(function (
     });
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
+
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth',App\Http\Middleware\UserIsAdminMiddleware::class]], function () {
     Route::get('/', function () {
         return view('dashboard.dashboard');
@@ -50,6 +61,37 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth',App\Http\Middlewa
         'post' => App\Http\Controllers\Dashboard\PostController::class,
         //'category' => App\Http\Controllers\Dashboard\CategoryController::class,
     ]);
+});
+
+Route::get('/perfil', function () {
+    $user = User::find(1);
+    $perfil = $user->profile;
+   
+    $profile = profile::find(1);
+    $user = $profile->user;
+    dd($user->email);
+});
+Route::get('/relacion', function () {
+    $category = Category::find(4);
+    $posts = $category->posts;
+    //dd($posts);
+    foreach($posts as $post){
+        echo $post->title. "<br>";
+    }
+});
+Route::get('/muchos', function () {
+   $post = Post::find(1);
+   $tags = $post->tags;
+   //dd($tags);
+   foreach($tags as $tag){
+      echo $tag->name. " <br>";
+   }
+    $tag = Tag::find(1);
+    $posts = $tag->posts;
+    foreach($posts as $post){
+      echo $post->id. " <br>";
+   }
+   
 });
 /*
     Route::get('/db', function () {
