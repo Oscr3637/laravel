@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Profile;
 use App\Http\Controllers\User\ProfileController;
 use App\Models\Post;
+use App\Models\Tag;
 
 Route::get('/', function () {
     return view('welcome');
@@ -95,6 +96,16 @@ Route::get('/muchos', function () {
            $post->tags()->attach($tag);
        }
    }
+   $post = post::find(5);
+   $tag1 = Tag::find(1);
+   $tag2 = Tag::find(2);
+   $tag3 = Tag::find(3);
+    //$post->tags()->attach([$tag1->id, $tag2->id, $tag3->id]);
+    //$post->tags()->detach([$tag1->id, $tag2->id, $tag3->id]);
+
+    //$post->tags()->sync([$tag1->id, $tag2->id, $tag3->id]);
+    $post->tags()->sync([1,2,3,4]);
+
 });
 /*
     Route::get('/db', function () {
