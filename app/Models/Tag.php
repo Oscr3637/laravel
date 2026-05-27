@@ -1,34 +1,22 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-return new class extends Migration
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Tag extends Model
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    use HasFactory;
+
+    public function posts()
     {
-        Schema::create('post_tag', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('post_id');
-            $table->unsignedBigInteger('tag_id');
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
-            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
-        });
+        return $this->belongsToMany(Post::class);
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('post_tag');
-    }
-};
+
 public function tags()
     {
 return $this->belongsToMany(Tag::class);
     }
+}

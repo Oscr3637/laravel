@@ -63,11 +63,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth',App\Http\Middlewa
 });
 
 Route::get('/perfil', function () {
-    $user = User::find(1);
-    $perfil = $user->profile;
-   
-    $profile = profile::find(1);
-    $user = $prPfile->user;
+    $profile = Profile::find(1);
+    $user = $profile->user;
     dd($user->email);
 });
 Route::get('/relacion', function () {
