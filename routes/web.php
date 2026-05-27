@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\Profile;
 use App\Http\Controllers\User\ProfileController;
 use App\Models\Post;
-use App\Models\Tag;
 
 Route::get('/', function () {
     return view('welcome');
@@ -68,7 +67,7 @@ Route::get('/perfil', function () {
     $perfil = $user->profile;
    
     $profile = profile::find(1);
-    $user = $profile->user;
+    $user = $prPfile->user;
     dd($user->email);
 });
 Route::get('/relacion', function () {
@@ -86,12 +85,19 @@ Route::get('/muchos', function () {
    foreach($tags as $tag){
       echo $tag->name. " <br>";
    }
-    $tag = Tag::find(1);
-    $posts = $tag->posts;
-    foreach($posts as $post){
-      echo $post->id. " <br>";
+
+   $tagClass = 'App\\Models\\Tag';
+   if (class_exists($tagClass)) {
+       $tag = $tagClass::find(1);
+       if ($tag) {
+           $posts = $tag->posts;
+           foreach($posts as $post){
+               echo $post->id. " <br>";
+           }
+
+           $post->tags()->attach($tag);
+       }
    }
-   
 });
 /*
     Route::get('/db', function () {
