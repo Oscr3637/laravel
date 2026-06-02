@@ -19,6 +19,8 @@
     @endsession
 
     @yield('content')
+    <br><br>
+    <a href="/dashboard" style="border:1px black solid; padding:5px;"> Dashboard </a>
 </body>
 
 </html>
