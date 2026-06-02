@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('url');
             $table->morphs('imageable'); //crea imageable_id y imageable_type
+            $table->unique('imageable_type', 'imageable_id'); //crea imageable_id y imageable_type
             $table->timestamps();
         });
     }

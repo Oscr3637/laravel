@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
-     public function imageable()
+    protected $fillable = ['url'];
+    public function imageable()
     {
         return $this->morphTo();
-        
+
     }
 //
 }

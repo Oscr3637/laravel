@@ -8,6 +8,8 @@ use App\Models\Profile;
 use App\Http\Controllers\User\ProfileController;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Product;
+use App\Http\Controllers\Blog\BlogController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -76,6 +78,26 @@ Route::get('/relacion', function () {
         echo $post->title. "<br>";
     }
 });
+Route::group(['prefix' => 'blog'], function () {
+    Route::controller(BlogController::class)->group(function () {
+       Route::get('', [BlogController::class, 'index'])->name('blog.index');
+       Route::get('detail/{post}', [BlogController::class, 'show'])->name('blog.show');
+     });
+    });
+
+Route::get("/poli", function(){
+       $user = User::find(1);
+       //$user->image()->create(['url'=> 'avatars/user1.jpg']);
+       $product = Product::find(1);
+       //$product->image()->create(['url' => 'avatars/producto1.jpg']);
+
+       $imageUrl = $user->image->url;
+       //dd($imageUrl);
+       $imageUrl = $user->image->imageable_type;
+       //dd($imageUrl);
+       $imageUrl_pro = $product->image->url;
+       dd($imageUrl_pro);
+});
 Route::get('/muchos', function () {
    $post = Post::find(1);
    $tags = $post->tags;
@@ -107,29 +129,3 @@ Route::get('/muchos', function () {
     $post->tags()->sync([1,2,3,4]);
 
 });
-/*
-    Route::get('/db', function () {
-
-$post = Post::join('categories', 'categories.id', '=', 'posts.category_id')->select('posts.*', 'categories.title as category')->orderBy('posts.created_at', 'desc')->toSql();
- echo $post;
-
-//$ver = Post::limit(3)->toSql();
- //echo $ver;
-
-});
-
-$posts7 = Post::where('id','>=', 1)->get();
-
-foreach($posts7 as $post7){
-  echo "Titulo: ". $post7->title . "<br>";
-  echo "Slug: ". $post7->slug . "<br>";
-  echo "Content: ". $post7->content . "<br>";
-  echo "*************";
-  }
-// dd($posts7);
-
-$post8 = Post::where('id','>=', 1)->pluck('title', 'id');
-
-dd($post8);
-});
-*/
