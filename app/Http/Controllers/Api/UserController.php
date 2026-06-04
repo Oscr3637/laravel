@@ -32,12 +32,9 @@ class UserController extends Controller
         }
         
     }
-    function logout(string $tokenId)  {
-        $user = Auth::user();
-        if (!$user instanceof User) {
-            return response()->json('Unauthenticated', 401);
-        }
-        $user->tokens()->where('id', $tokenId)->delete();
-        return response()->json('Token revoked');
+    function logout(Request $request)  {
+       // Eliminamos el token que está usando el usuario en esta petición
+        $request->user()->currentAccessToken()->delete();
+                return response()->json(['message' => 'Token eliminado correctamente'], 204);
     }
 }

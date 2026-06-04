@@ -18,8 +18,7 @@ class User extends Authenticatable
 {
      use HasApiTokens, HasFactory, Notifiable;
 
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    /* @use HasFactory<UserFactory> */
 
     /**
      * Get the attributes that should be cast.
