@@ -11,6 +11,7 @@ use App\Models\Tag;
 use App\Models\Product;
 use App\Http\Controllers\Blog\BlogController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -119,7 +120,7 @@ Route::get('/muchos', function () {
            $post->tags()->attach($tag);
        }
    }
-   $post = post::find(5);
+   $post = Post::find(5);
    $tag1 = Tag::find(1);
    $tag2 = Tag::find(2);
    $tag3 = Tag::find(3);
@@ -131,3 +132,5 @@ Route::get('/muchos', function () {
 
 });
 Route::get('/curso', [CourseController::class, 'index']);
+Route::post('user/login', 'App\Http\Controllers\UserController@login');
+npm instal

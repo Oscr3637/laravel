@@ -15,6 +15,10 @@ class CategoryController extends Controller
     {
         return response()->json(Category::create($request->validated()));
     }
+    public function show(Category $category): JsonResponse
+    {
+        return response()->json($category);
+    }
     public function update(PutRequest $request, Category $category): JsonResponse
     {
         $category->update($request->validated());
