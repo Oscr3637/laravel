@@ -10,6 +10,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Product;
 use App\Http\Controllers\Blog\BlogController;
+use App\Http\Controllers\CourseController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -129,3 +130,4 @@ Route::get('/muchos', function () {
     $post->tags()->sync([1,2,3,4]);
 
 });
+Route::get('/curso', [CourseController::class, 'index']);
