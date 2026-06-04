@@ -133,4 +133,3 @@ Route::get('/muchos', function () {
 });
 Route::get('/curso', [CourseController::class, 'index']);
 Route::post('user/login', 'App\Http\Controllers\UserController@login');
-npm instal
