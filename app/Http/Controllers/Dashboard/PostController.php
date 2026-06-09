@@ -154,6 +154,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if (!Gate::allows('delete', $post)) {
+            return abort(403);
+        }
         //dd($post);     
         $post->delete();
         session()->forget('key-xx');
