@@ -11,3 +11,9 @@ window.axios.get('/sanctum/csrf-cookie').then(response => {
         console.log(error.response?.data || error);            
     });
 });
+
+window.axios.get('/sanctum/csrf-cookie').then(response => {
+    window.axios.get('/api/user').then(response => {
+        console.log(response.data)
+    });
+});

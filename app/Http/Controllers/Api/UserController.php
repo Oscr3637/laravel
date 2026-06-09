@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api;
+/*namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -36,5 +36,32 @@ class UserController extends Controller
        // Eliminamos el token que está usando el usuario en esta petición
         $request->user()->currentAccessToken()->delete();
                 return response()->json(['message' => 'Token eliminado correctamente'], 204);
+    }
+}
+*/
+namespace App\Http\Controllers\Api;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+class UserController extends Controller
+{
+    function login(Request $request) {
+        $validator = validator()->make($request->all(), ["email" =>
+        'required', 'email',
+        'password' => 'required'
+            ]);  
+            
+        if($validator->fails()){
+                //return $validator->errors();
+            return response()->json($validator->errors(),422);
+        }
+        $credentials = $validator->validated();
+    
+        if(Auth::attempt($credentials)){
+            session()->regenerate(); // SPA con COOKIE
+            return response()->json('Successful authentication'); // SPA con COOKIE
+        }else{
+            return response()->json('Invalid credentials', 401);
+        }
     }
 }
