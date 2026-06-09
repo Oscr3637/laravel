@@ -29,6 +29,7 @@ class PutRequest extends FormRequest
             "category_id" => "required|integer",
             "description" => "required|min:7",
             "posted" => "required",
+            "user_id" => "required",
             "image" => "mimes:jpeg,jpg,png|max:10240"
  
         ];;

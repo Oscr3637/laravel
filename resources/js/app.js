@@ -1,5 +1,5 @@
 import './bootstrap';
-
+/*
 // Ya no necesitas importar, axios está global
 window.axios.get('/sanctum/csrf-cookie').then(response => {
     window.axios.post("/api/user/login", {
@@ -17,3 +17,4 @@ window.axios.get('/sanctum/csrf-cookie').then(response => {
         console.log(response.data)
     });
 });
+*/

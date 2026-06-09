@@ -8,11 +8,13 @@ use App\Http\Controllers\Api\UserController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+/*
 Route::post('user/login',[UserController::class, 'login']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('category', App\Http\Controllers\Api\CategoryController::class)->except(["create", "edit"]);
     Route::resource('post', App\Http\Controllers\Api\PostController::class)->except(["create", "edit"]);
 });
-
+*/
 
 

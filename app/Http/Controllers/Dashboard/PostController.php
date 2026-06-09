@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Post\PutRequest;
 use App\Models\Category;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -121,7 +121,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+          if (!Gate::allows('update-post', $post)) {
+            return abort(403);
+          }    
+    //
         $categories = Category::pluck('id', 'title');
         return view('dashboard.post.edit', compact('categories', 'post'));
     }
@@ -131,6 +134,9 @@ class PostController extends Controller
      */
     public function update(PutRequest $request, Post $post)
     {
+          if (!Gate::allows('update-post', $post)) {
+            return abort(403);
+          }
         $data = $request->validated();
         if (isset($data["image"])) {
             $data["image"] = time() . "." . $data["image"]->extension();

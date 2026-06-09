@@ -23,6 +23,7 @@
 <label for="">Contenido</label>
 <textarea name="content"> {{ old("content",$post->content) }}</textarea>
 <label for="">Descripción</label>
+<input type="hidden" name="user_id" value="{{ auth()->id() }}">
 <textarea name="description">{{ old("description",$post->description) }}</textarea>
 <br>
 
