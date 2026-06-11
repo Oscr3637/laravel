@@ -66,7 +66,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
         //'category' => App\Http\Controllers\Dashboard\CategoryController::class,
         'role' => App\Http\Controllers\Dashboard\RoleController::class,    
         'permission' => App\Http\Controllers\Dashboard\PermissionController::class,
-        
+        'user' => App\Http\Controllers\Dashboard\UserController::class
         ]);
 
         //  roles - permissions

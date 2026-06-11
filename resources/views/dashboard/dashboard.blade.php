@@ -21,7 +21,9 @@
     <br>
     <a href="{{ route('permission.index') }}">Ver Permisos</a>  
     <br>
-    
+        <a href="{{ route('user.index') }}">Ver Usuarios</a>
+        <br>
+        
 
     <a href="/">INICIO</a>
 
