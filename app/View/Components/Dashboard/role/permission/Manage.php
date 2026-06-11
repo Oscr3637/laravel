@@ -2,25 +2,55 @@
 
 namespace App\View\Components\Dashboard\role\permission;
 
-use Closure;
-use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Gate; // <-- Agregar
 
 class Manage extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+    public $role;
+
+    public function __construct(Role $role)
     {
-        //
+        $this->role = $role;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
-    public function render(): View|Closure|string
+     public function render()
     {
-        return view('components.dashboard.role.permission.manage');
+        return view('components.dashboard.role.permission.manage', [
+            'permissionsRole' => $this->role->permissions,
+            'permissions' => Permission::get()
+        ]);
     }
+
+    public function handle(Role $role)
+    {
+       
+        $permission = Permission::findOrFail(request('permission'));
+        $role->givePermissionTo($permission);
+        //return redirect()->back();
+        
+        if (request()->ajax()) {
+            return response()->json($permission);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function delete(Role $role)
+    {
+       
+        $permission = Permission::find(request('permission'));
+        $role->revokePermissionTo($permission);
+        //return redirect()->back();
+
+        if (request()->ajax()) {
+            return response()->json(['message' => 'ok']);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+   
 }

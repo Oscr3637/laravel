@@ -66,7 +66,13 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
         //'category' => App\Http\Controllers\Dashboard\CategoryController::class,
         'role' => App\Http\Controllers\Dashboard\RoleController::class,    
         'permission' => App\Http\Controllers\Dashboard\PermissionController::class,
+        
         ]);
+
+        //  roles - permissions
+    Route::post('role/assign/permission/{role}', [App\View\Components\Dashboard\role\permission\Manage::class, 'handle'])->name('role.assign.permission');
+   
+    Route::post('role/delete/permission/{role}', [App\View\Components\Dashboard\role\permission\Manage::class, 'delete'])->name('role.delete.permission');
 });
 
 Route::get('/perfil', function () {
