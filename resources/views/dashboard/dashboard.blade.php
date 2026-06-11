@@ -17,7 +17,12 @@
 <br>
     <a href="{{ route('post.index') }}">Ver Post</a>
     <br>
-     <br>
+   <a href="{{ route('role.index') }}">Ver Roles</a>
+    <br>
+    <a href="{{ route('permission.index') }}">Ver Permisos</a>  
+    <br>
+    
+
     <a href="/">INICIO</a>
 
 </body>
