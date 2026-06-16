@@ -15,12 +15,12 @@
     <button type="submit">
             Cerrar Sesión
     </button>
-    
-</form>
-<br>
+    <br><br>
+    <a href="{{ route('category.index')}}"> Ver Categoria </a>
+    <br>
     <a href="{{ route('post.index') }}">Ver Post</a>
     <br>
-   <a href="{{ route('role.index') }}">Ver Roles</a>
+    <a href="{{ route('role.index') }}">Ver Roles</a>
     <br>
     <a href="{{ route('permission.index') }}">Ver Permisos</a>  
     <br>
@@ -29,6 +29,6 @@
         
 
     <a href="/">INICIO</a>
-
+</form>
 </body>
 </html>

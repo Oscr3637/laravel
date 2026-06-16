@@ -22,45 +22,8 @@ class PostController extends Controller
         if (!Auth::user()->hasPermissionTo('editor.post.index')) {
             abort(403, 'No tienes permiso para ver los posts');
         }   
-    /* 
-        return Post::create(
-            ['title' => "test",
-             'slug' => "test",
-             'content' => "test",
-             'item' => "item 1",
-             'category_id' => 1,
-             'description' => "test",
-             'posted' => "not",
-             'image' => "test"]
-        );
-*/
-        /*$post = Post::find(3);
-        //dd($post);
-        return $post->update(
-            [
-                'title' => "test new",
-                'slug' => "test",
-                'content' => "test",
-                'item' => "item 1",
-                'category_id' => 1,
-                'description' => "test",
-                'posted' => "not",
-                'image' => "test"
-            ]
-        );*/
-        //$post = Post::get(); //con filtro/
-        //$post = Post::all(); //  sin filtro
-        //dd($post [0]);
-        /*$post = Post::find(4);
-         return $post ->delete();*/
-        //$post = Post::find(3);
-        //dd($post->category->title);
-        //$categorias = Category::find(1);
-        //dd($categorias->posts);
-        // foreach ($categorias->posts as $po) {
-        //   echo $po->title;
-        //  echo "<br>";
-        //}
+     
+        
         $posts = Post::paginate(4);
 
         return view('dashboard.post.index', compact('posts'));
@@ -130,7 +93,8 @@ class PostController extends Controller
           }  */
         if (!Auth::user()->hasPermissionTo('editor.post.update')) {
             abort(403, 'No tienes permiso para editar posts');  
-    //
+        }
+        //
         $categories = Category::pluck('id', 'title');
         return view('dashboard.post.edit', compact('categories', 'post'));
     }
@@ -140,10 +104,7 @@ class PostController extends Controller
      */
     public function update(PutRequest $request, Post $post)
     {
-          /* if (!Gate::allows('update-post', $post)) {
-            return abort(403);
-
-          }*/
+          
             // Verificar si el usuario tiene permiso para editar posts
         if (!Auth::user()->hasPermissionTo('editor.post.update')) {
             abort(403, 'No tienes permiso para editar posts');

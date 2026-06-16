@@ -63,7 +63,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     Route::resources([
         'post' => App\Http\Controllers\Dashboard\PostController::class,
-        //'category' => App\Http\Controllers\Dashboard\CategoryController::class,
+        'category' => App\Http\Controllers\Dashboard\CategoryController::class,
         'role' => App\Http\Controllers\Dashboard\RoleController::class,    
         'permission' => App\Http\Controllers\Dashboard\PermissionController::class,
         'user' => App\Http\Controllers\Dashboard\UserController::class
