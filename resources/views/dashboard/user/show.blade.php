@@ -7,7 +7,7 @@
     </ul>   
      
      {{-- Solo mostrar la gestión de roles/permisos si el usuario tiene permiso de actualizar --}}
-    @can('editor.user.update')
-        {{-- <x-dashboard.user.role.permission.manage :user="$user" /> --}}
-    @endcan
+    {{--@can('editor.user.update')--}}
+     <x-dashboard.user.role.permission.manage :user="$user" />  
+    {{-- -@endcan --}} 
 @endsection
