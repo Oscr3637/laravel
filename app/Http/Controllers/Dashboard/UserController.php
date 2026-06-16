@@ -8,6 +8,7 @@ use App\Http\Requests\User\PutRequest;
 use App\Http\Requests\User\StoreRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Gate;
 
 
 class UserController extends Controller
@@ -15,20 +16,15 @@ class UserController extends Controller
     public function index()
     {
          // Verificar permiso para ver usuarios
-        if (!Auth::user()->hasPermissionTo('editor.user.index')) {
-            abort(403, 'No tienes permiso para ver usuarios');
-        }
-        // Filtrar usuarios según el rol del usuario autenticado
+        //if (!Auth::user()->hasPermissionTo('editor.user.index')) {
+           // abort(403, 'No tienes permiso para ver usuarios');
+        //}
+       // Filtrar usuarios según el rol del usuario autenticado
         // Si NO es Admin, solo ve usuarios 'regular' (editores)
         // Si es Admin, ve todos los usuarios
-        if (Auth::user()->hasRole('Admin')) {
-            $users = User::paginate(10);
-           
-        } else {
-
-            $users = User::role('Editor')->paginate(10);
-           
-        }
+        $users = User::when(!Auth::user()->hasRole('Admin'), function ($query) {
+            return $query->where('role', 'regular'); // regular = editor
+        })->paginate(10);
         
         return view('dashboard/user/index', compact('users'));
     }
@@ -59,22 +55,36 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        Gate::authorize('update-view-user-admin', $user);
         return view('dashboard/user/show', ['user' => $user]);
     }
 
     public function edit(User $user)
     {
+        Gate::authorize('update-view-user-admin', $user);
         return view('dashboard.user.edit', compact('user'));
     }
 
     public function update(PutRequest $request, User $user)
     {
+        // Verificar permiso específico de edición
+        
+        Gate::authorize('update-view-user-admin', $user);
+
+        if (!Auth::user()->hasPermissionTo('editor.user.update')) {
+            abort(403);
+        }
         $user->update($request->validated());
         return to_route('user.index')->with('status', 'User updated');
     }
 
     public function destroy(User $user)
     {
+        Gate::authorize('update-view-user-admin', $user);
+
+        if (!Auth::user()->hasPermissionTo('editor.user.destroy')) {
+            abort(403);
+        }
         $user->delete();
         return to_route('user.index')->with('status', 'User deleted');
     }
