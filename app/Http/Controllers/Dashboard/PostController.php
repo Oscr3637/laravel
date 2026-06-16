@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\StoreRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Post\PutRequest;
 use App\Models\Category;
 use Illuminate\View\View;
@@ -18,7 +19,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        /* 
+        if (!Auth::user()->hasPermissionTo('editor.post.index')) {
+            abort(403, 'No tienes permiso para ver los posts');
+        }   
+    /* 
         return Post::create(
             ['title' => "test",
              'slug' => "test",
@@ -121,9 +125,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-          if (!Gate::allows('update-post', $post)) {
+        /* if (!Gate::allows('update-post', $post)) {
             return abort(403);
-          }    
+          }  */
+        if (!Auth::user()->hasPermissionTo('editor.post.update')) {
+            abort(403, 'No tienes permiso para editar posts');  
     //
         $categories = Category::pluck('id', 'title');
         return view('dashboard.post.edit', compact('categories', 'post'));
@@ -134,9 +140,14 @@ class PostController extends Controller
      */
     public function update(PutRequest $request, Post $post)
     {
-          if (!Gate::allows('update-post', $post)) {
+          /* if (!Gate::allows('update-post', $post)) {
             return abort(403);
-          }
+
+          }*/
+            // Verificar si el usuario tiene permiso para editar posts
+        if (!Auth::user()->hasPermissionTo('editor.post.update')) {
+            abort(403, 'No tienes permiso para editar posts');
+        }
         $data = $request->validated();
         if (isset($data["image"])) {
             $data["image"] = time() . "." . $data["image"]->extension();
@@ -154,8 +165,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if (!Gate::allows('delete', $post)) {
+        /* if (!Gate::allows('delete', $post)) {
             return abort(403);
+        } */
+       // Verificar si el usuario tiene permiso para eliminar posts
+        if (!Auth::user()->hasPermissionTo('editor.post.destroy')) {
+            abort(403, 'No tienes permiso para eliminar posts');
         }
         //dd($post);     
         $post->delete();

@@ -7,6 +7,9 @@
 </head>
 <body>
     <h1>DASHBOARD</h1>
+    @auth
+        <p>Bienvenido, {{ auth()->user()->name }}</p>
+    @endauth
     <form method="POST" action="{{ route('logout') }}">
     @csrf
     <button type="submit">
